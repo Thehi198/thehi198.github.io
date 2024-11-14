@@ -1,6 +1,7 @@
 ---
 layout: home
 author_profile: true
+title: Hello!
 layout: collection
 collection: portfolio
 entries_layout: grid
