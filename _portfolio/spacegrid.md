@@ -11,7 +11,7 @@ tags:
   - project
   - space-infra
 ---
-
+January 15, 2023
 ## Abstract
 236 terawatt hours. That is how much power data centers consumed in 2021. From YouTube to Netflix, Wikipedia to ChatGPT, almost every application we rely on today uses cloud computing as its backbone. The need for cloud data centers is growing exponentially. An average datacenter of 50,000 Sq Ft. consumes 5 Megawatts of power. This is enough to power 5,000 homes. Even with renewable energy options expanding, the demand cannot keep up with the supply. This is not sustainable.
 
