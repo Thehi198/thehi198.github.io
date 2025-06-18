@@ -10,15 +10,3 @@ $caption-font-family: 'Lexend', sans-serif;
 
 @import "minimal-mistakes/skins/notion";
 @import "minimal-mistakes";
-
-/* Override footer text color */
-.page__footer {
-  color: #fff;
-
-  .fas,
-  .fab,
-  .far,
-  .fal {
-    color: #fff;
-  }
-}
