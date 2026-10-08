@@ -61,7 +61,7 @@ layout: default
     {%- for b in recent -%}{%- unless now contains b -%}{%- assign now = now | push: b -%}{%- endunless -%}{%- endfor -%}
     {% if now.size > 0 %}
     <ul class="book-list">
-      {% for b in now limit: 4 %}{% include book-row.html book=b year=true %}{% endfor %}
+      {% for b in now limit: 3 %}{% include book-row.html book=b year=true %}{% endfor %}
     </ul>
     {% else %}
     <p class="empty">Nothing listed yet.</p>
