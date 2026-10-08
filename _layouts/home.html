@@ -56,9 +56,9 @@ layout: default
     {%- assign now = shelf.books | where: "status", "reading" -%}
     {%- if now.size == 0 -%}{%- assign now = shelf.books | where: "status", "finished" | sort: "finished" | reverse -%}{%- endif -%}
     {% if now.size > 0 %}
-    <div class="book-list book-list-compact">
-      {% for b in now limit: 3 %}{% include book-row.html book=b compact=true %}{% endfor %}
-    </div>
+    <ul class="book-list">
+      {% for b in now limit: 4 %}{% include book-row.html book=b %}{% endfor %}
+    </ul>
     {% else %}
     <p class="empty">Nothing listed yet.</p>
     {% endif %}

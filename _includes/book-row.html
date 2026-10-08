@@ -1,10 +1,2 @@
 {%- assign b = include.book -%}
-<article class="book">
-  <span class="book-when">{% if b.status == "reading" %}Reading{% elsif b.finished %}{{ b.finished | append: "-01" | slice: 0, 10 | date: "%b %Y" }}{% elsif b.status == "next" %}Next{% endif %}</span>
-  <div class="book-body">
-    <h3 class="book-title">{% if b.link %}<a href="{{ b.link }}">{{ b.title }}</a>{% else %}{{ b.title }}{% endif %}</h3>
-    <p class="book-author">{{ b.author }}{% if b.year %}<span class="book-year">{{ b.year }}</span>{% endif %}</p>
-    {% if b.note and include.compact != true %}<p class="book-note">{{ b.note }}</p>{% endif %}
-  </div>
-  {% if b.tags and include.compact != true %}<div class="book-tags">{% for t in b.tags limit: 2 %}<span class="mg-tag">{{ t }}</span>{% endfor %}</div>{% endif %}
-</article>
+<li class="book"><span class="book-main">{% if b.link %}<a class="book-title" href="{{ b.link }}">{{ b.title }}</a>{% else %}<cite class="book-title">{{ b.title }}</cite>{% endif %}<span class="book-author">{{ b.author }}</span></span>{% if b.finished %}<span class="book-when">{{ b.finished | append: "-01" | slice: 0, 10 | date: "%b %Y" }}</span>{% endif %}</li>
