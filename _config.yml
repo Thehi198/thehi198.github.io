@@ -1,13 +1,13 @@
 # Site identity. Everything in the home page header comes from here.
 title: Aaditya Rao
-description: Mechanical engineering student at Olin College working on Hall thruster design.
+description: Electrical and computer engineering student at Olin College working on Hall thruster design.
 url: "https://thehi198.github.io"
 baseurl: ""
 lang: en
 
 author:
   name: Aaditya Rao
-  affiliation: Mechanical engineering, Olin College of Engineering.
+  affiliation: Electrical and computer engineering, Olin College of Engineering.
   photo: /assets/images/bio-photo.png
   photo_alt: Portrait of Aaditya Rao
   links:
@@ -20,7 +20,7 @@ author:
 
 # Home page
 home:
-  projects_heading: Selected work
+  projects_heading: Portfolio
   blog_heading: Writing
   blog_limit: 6
 
