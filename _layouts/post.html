@@ -2,7 +2,7 @@
 layout: default
 ---
 <article class="doc">
-  <p class="back"><a class="mg-link" href="{{ '/' | relative_url }}#writing">← {{ site.author.name }}</a></p>
+  <p class="back"><a class="mg-link" href="{{ '/' | relative_url }}#{% if page.categories contains 'reading' %}reading{% else %}writing{% endif %}">← {{ site.author.name }}</a></p>
   <header class="doc-header">
     <h1 class="title doc-title">{{ page.title }}</h1>
     <div class="mg-entry-meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d %b %Y" }}</time>{% if page.tags.size > 0 %} · {{ page.tags | join: " · " }}{% endif %}</div>
@@ -10,5 +10,5 @@ layout: default
   <div class="prose">
     {{ content }}
   </div>
-  <p class="back back-end"><a class="mg-link" href="{{ '/' | relative_url }}#writing">← All writing</a></p>
+  <p class="back back-end">{% if page.categories contains 'reading' %}<a class="mg-link" href="{{ '/' | relative_url }}#reading">← Reading</a>{% else %}<a class="mg-link" href="{{ '/' | relative_url }}#writing">← All writing</a>{% endif %}</p>
 </article>

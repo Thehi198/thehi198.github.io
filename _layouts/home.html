@@ -4,7 +4,9 @@ layout: default
 {%- assign projects = site.projects | sort: "order" -%}
 {%- assign featured_count = projects | where: "featured", true | size -%}
 {%- if site.project_tags -%}{%- assign all_tags = site.project_tags -%}{%- else -%}{%- assign all_tags = projects | map: "tags" | join: "," | split: "," | uniq | sort_natural -%}{%- endif -%}
-{%- assign posts = site.posts -%}
+{%- assign reading_posts = site.categories.reading | default: empty -%}
+{%- assign posts = "" | split: "" -%}
+{%- for post in site.posts -%}{%- unless post.categories contains "reading" -%}{%- assign posts = posts | push: post -%}{%- endunless -%}{%- endfor -%}
 
 <header class="mg-header site-header">
   <div class="site-header-text">
@@ -60,19 +62,9 @@ layout: default
 
 <section class="site-section" id="reading" aria-labelledby="reading-heading">
   <h2 class="mg-section" id="reading-heading"><span class="mg-section-num">§3</span><span class="mg-section-title">{{ site.home.reading_heading | default: "Reading" }}</span></h2>
-  {% assign reading = site.data.reading %}
-  {% if reading and reading.size > 0 %}
+  {% if reading_posts.size > 0 %}
   <div class="post-list">
-    {% for r in reading %}
-    <article class="post-row read-row">
-      <span class="post-row-date">{{ r.status | default: r.year }}</span>
-      <div>
-        <h3 class="post-row-title read-title">{% if r.link %}<a href="{{ r.link }}">{{ r.title }}</a>{% else %}{{ r.title }}{% endif %}</h3>
-        {% if r.author %}<p class="read-author">{{ r.author }}</p>{% endif %}
-        {% if r.note %}<p class="post-row-abs">{{ r.note }}</p>{% endif %}
-      </div>
-    </article>
-    {% endfor %}
+    {% for post in reading_posts %}{% include post-row.html post=post %}{% endfor %}
   </div>
   {% else %}
   <p class="empty">Nothing listed yet.</p>

@@ -4,5 +4,5 @@ title: Writing
 permalink: /blog/
 ---
 <div class="post-list">
-  {% for post in site.posts %}{% include post-row.html post=post %}{% endfor %}
+  {% for post in site.posts %}{% unless post.categories contains "reading" %}{% include post-row.html post=post %}{% endunless %}{% endfor %}
 </div>
