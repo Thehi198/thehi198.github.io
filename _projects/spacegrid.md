@@ -5,7 +5,7 @@ role: Independent research
 order: 1
 featured: true
 abstract: "Proposed a laser-linked backplane for satellite compute constellations, with FFT-based multi-channel transmission and locally topology-sensitive A* routing."
-tags: [Space infrastructure, Networking, Research]
+tags: [Space, Research]
 image: /assets/images/spacegrid.webp
 image_alt: Concept render of a satellite constellation
 image_caption: Concept render. Each satellite acts as a compute rack; the constellation is the data center.

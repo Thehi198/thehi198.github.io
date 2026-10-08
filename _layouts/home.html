@@ -3,7 +3,7 @@ layout: default
 ---
 {%- assign projects = site.projects | sort: "order" -%}
 {%- assign featured_count = projects | where: "featured", true | size -%}
-{%- assign all_tags = projects | map: "tags" | join: "," | split: "," | uniq | sort_natural -%}
+{%- if site.project_tags -%}{%- assign all_tags = site.project_tags -%}{%- else -%}{%- assign all_tags = projects | map: "tags" | join: "," | split: "," | uniq | sort_natural -%}{%- endif -%}
 {%- assign posts = site.posts -%}
 
 <header class="mg-header site-header">
@@ -23,24 +23,11 @@ layout: default
 <section class="site-section" id="work" aria-labelledby="work-heading">
   <h2 class="mg-section" id="work-heading"><span class="mg-section-num">§1</span><span class="mg-section-title">{{ site.home.projects_heading }}</span></h2>
 
-  <div class="filter" data-filter hidden>
-    <div class="filter-box" data-filter-box>
-      <span class="filter-chips" data-filter-chips></span>
-      <button type="button" class="filter-toggle" data-filter-toggle aria-expanded="false" aria-controls="filter-panel">Filter by tag <span aria-hidden="true">▾</span></button>
-    </div>
-    <div class="filter-panel" id="filter-panel" data-filter-panel role="group" aria-label="Filter projects by tag" hidden>
-      {% if featured_count > 0 %}
-      <label class="filter-option"><input type="checkbox" id="filter-featured" value="featured"><span>Featured</span><span class="filter-count" data-count="featured"></span></label>
-      <div class="filter-divider" role="separator"></div>
-      {% endif %}
-      {% for t in all_tags %}
-      <label class="filter-option"><input type="checkbox" id="filter-{{ t | slugify }}" value="{{ t | downcase }}"><span>{{ t }}</span><span class="filter-count" data-count="{{ t | downcase }}"></span></label>
-      {% endfor %}
-      <div class="filter-panel-foot">
-        <button type="button" data-filter-clear>Clear</button>
-        <button type="button" data-filter-done>Done</button>
-      </div>
-    </div>
+  <div class="filter" role="group" aria-label="Filter projects" data-filter hidden>
+    {% if featured_count > 0 %}<button type="button" class="mg-tag" data-filter-value="featured">Featured</button>{% endif %}
+    <button type="button" class="mg-tag" data-filter-all>All</button>
+    {% if all_tags.size > 0 %}<span class="filter-sep" aria-hidden="true">·</span>{% endif %}
+    {% for t in all_tags %}<button type="button" class="mg-tag" data-filter-value="{{ t | downcase | escape }}">{{ t }}</button>{% endfor %}
   </div>
 
   <div class="project-list" data-projects>

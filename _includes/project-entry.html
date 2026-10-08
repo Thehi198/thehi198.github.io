@@ -1,10 +1,8 @@
 {%- assign p = include.project -%}
-{%- capture meta -%}{{ p.year | default: p.date | date: "%Y" }}{% if p.role %} · {{ p.role }}{% endif %}{% if p.org %} · {{ p.org }}{% endif %}{%- endcapture -%}
-<article class="mg-entry" data-tags="{{ p.tags | join: '|' | downcase }}" data-featured="{% if p.featured %}true{% else %}false{% endif %}">
-  <div class="mg-entry-idx" aria-hidden="true">{% if include.index < 10 %}0{% endif %}{{ include.index }}</div>
+<article class="mg-entry" data-tags="{{ p.tags | join: '|' | downcase | escape }}" data-featured="{% if p.featured %}true{% else %}false{% endif %}">
+  <time class="mg-entry-idx" datetime="{{ p.date | date: '%Y-%m' }}">{{ p.date | date: "%b %Y" }}</time>
   <div>
     <h3 class="mg-entry-title"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
-    <div class="mg-entry-meta">{{ meta }}</div>
     {% if p.abstract %}<p class="mg-entry-abs">{{ p.abstract | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>{% endif %}
     {% if p.tags.size > 0 or p.status %}
     <div class="mg-entry-tags">

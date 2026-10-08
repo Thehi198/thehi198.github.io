@@ -1,115 +1,73 @@
 (function () {
-  // Project filter: tag checkboxes in a dropdown. A project shows when it
-  // matches any checked option; nothing checked shows every project.
+  // Project filter: toggle chips. A project shows when it matches any chip
+  // that is on; with every chip off ("All") every project shows.
   var bar = document.querySelector("[data-filter]");
   var list = document.querySelector("[data-projects]");
   if (bar && list) {
     var entries = Array.prototype.slice.call(list.querySelectorAll(".mg-entry"));
-    var box = bar.querySelector("[data-filter-box]");
-    var chips = bar.querySelector("[data-filter-chips]");
-    var opener = bar.querySelector("[data-filter-toggle]");
-    var panel = bar.querySelector("[data-filter-panel]");
-    var boxes = Array.prototype.slice.call(panel.querySelectorAll("input[type=checkbox]"));
+    var chips = Array.prototype.slice.call(bar.querySelectorAll("[data-filter-value]"));
+    var allBtn = bar.querySelector("[data-filter-all]");
     var status = document.querySelector("[data-filter-status]");
+    var on = [];
 
     function tagsOf(el) {
       var t = (el.getAttribute("data-tags") || "").split("|");
       if (el.getAttribute("data-featured") === "true") t.push("featured");
       return t;
     }
-    function labelOf(cb) { return cb.parentNode.querySelector("span").textContent; }
-    function checked() { return boxes.filter(function (b) { return b.checked; }); }
-
-    boxes.forEach(function (cb) {
-      var n = entries.filter(function (el) { return tagsOf(el).indexOf(cb.value) >= 0; }).length;
-      var c = panel.querySelector('[data-count="' + cb.value + '"]');
-      if (c) c.textContent = n;
+    chips.forEach(function (c) {
+      var v = c.getAttribute("data-filter-value");
+      var n = entries.filter(function (el) { return tagsOf(el).indexOf(v) >= 0; }).length;
+      if (!n) { c.disabled = true; c.title = "No projects yet"; }
     });
 
     function apply(save) {
-      var sel = checked().map(function (b) { return b.value; });
       var shown = 0;
       entries.forEach(function (el) {
         var t = tagsOf(el);
-        var match = !sel.length || sel.some(function (v) { return t.indexOf(v) >= 0; });
+        var match = !on.length || on.some(function (v) { return t.indexOf(v) >= 0; });
         el.hidden = !match;
-        if (match) {
-          shown += 1;
-          el.querySelector(".mg-entry-idx").textContent = (shown < 10 ? "0" : "") + shown;
-        }
+        if (match) shown += 1;
       });
-
-      chips.textContent = "";
-      if (!sel.length) {
-        var ph = document.createElement("span");
-        ph.className = "filter-placeholder";
-        ph.textContent = "All projects";
-        chips.appendChild(ph);
-      }
-      checked().forEach(function (cb) {
-        var chip = document.createElement("span");
-        chip.className = "mg-tag mg-tag-solid";
-        chip.appendChild(document.createTextNode(labelOf(cb)));
-        var x = document.createElement("button");
-        x.type = "button";
-        x.className = "filter-chip-x";
-        x.setAttribute("aria-label", "Remove " + labelOf(cb));
-        x.textContent = "×";
-        x.addEventListener("click", function (e) {
-          e.stopPropagation();
-          cb.checked = false;
-          apply(true);
-          opener.focus();
-        });
-        chip.appendChild(x);
-        chips.appendChild(chip);
+      chips.forEach(function (c) {
+        c.setAttribute("aria-pressed", on.indexOf(c.getAttribute("data-filter-value")) >= 0 ? "true" : "false");
       });
-      opener.firstChild.nodeValue = sel.length ? "Edit " : "Filter by tag ";
-
+      allBtn.setAttribute("aria-pressed", on.length ? "false" : "true");
       if (status) {
         status.textContent = "Showing " + shown + " of " + entries.length + " projects";
-        if (sel.length) {
+        if (on.length && shown < entries.length) {
           status.appendChild(document.createTextNode(" · "));
           var all = document.createElement("button");
           all.type = "button";
           all.textContent = "See all";
-          all.addEventListener("click", function () { setAll(false); });
+          all.addEventListener("click", function () { on = []; apply(true); });
           status.appendChild(all);
         }
       }
       if (save) {
         try {
           var url = new URL(window.location.href);
-          url.searchParams.set("tags", sel.join(","));
+          url.searchParams.set("tags", on.join(","));
           history.replaceState(null, "", url);
         } catch (e) {}
       }
     }
 
-    function setAll(v) { boxes.forEach(function (b) { b.checked = v; }); apply(true); }
-    function open(v) {
-      panel.hidden = !v;
-      opener.setAttribute("aria-expanded", v ? "true" : "false");
-      opener.lastElementChild.textContent = v ? "▴" : "▾";
-    }
-
-    box.addEventListener("click", function () { open(panel.hidden); });
-    boxes.forEach(function (cb) { cb.addEventListener("change", function () { apply(true); }); });
-    panel.querySelector("[data-filter-clear]").addEventListener("click", function () { setAll(false); });
-    panel.querySelector("[data-filter-done]").addEventListener("click", function () { open(false); opener.focus(); });
-    document.addEventListener("click", function (e) { if (!bar.contains(e.target)) open(false); });
-    bar.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !panel.hidden) { open(false); opener.focus(); }
+    chips.forEach(function (c) {
+      c.addEventListener("click", function () {
+        var v = c.getAttribute("data-filter-value"), i = on.indexOf(v);
+        if (i >= 0) on.splice(i, 1); else on.push(v);
+        apply(true);
+      });
     });
+    allBtn.addEventListener("click", function () { on = []; apply(true); });
 
     // Initial state: ?tags=a,b from the URL, otherwise Featured when it exists.
-    var initial = null;
-    try {
-      var q = new URLSearchParams(window.location.search).get("tags");
-      if (q !== null) initial = q ? q.split(",") : [];
-    } catch (e) {}
-    if (initial === null) initial = boxes.some(function (b) { return b.value === "featured"; }) ? ["featured"] : [];
-    boxes.forEach(function (b) { b.checked = initial.indexOf(b.value) >= 0; });
+    var q = null;
+    try { q = new URLSearchParams(window.location.search).get("tags"); } catch (e) {}
+    var valid = chips.map(function (c) { return c.getAttribute("data-filter-value"); });
+    if (q !== null) on = q.split(",").filter(function (v) { return valid.indexOf(v) >= 0; });
+    else if (valid.indexOf("featured") >= 0) on = ["featured"];
     bar.hidden = false;
     apply(false);
   }

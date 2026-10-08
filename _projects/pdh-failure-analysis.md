@@ -6,7 +6,7 @@ org: FRC 7461
 order: 2
 featured: true
 abstract: "Root-caused a PDH fire to a ground wire working loose from its WAGO clamp under battery-swap tension, then rewrote the team's wiring and inspection procedure."
-tags: [Robotics, Electrical, Failure analysis]
+tags: [Power]
 image: /assets/images/PDH.webp
 image_alt: REV power distribution hub after the failure
 image_caption: The power distribution hub after Quals 27. The ground port shows melted housing around the WAGO clamp.

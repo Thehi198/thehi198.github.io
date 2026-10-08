@@ -24,6 +24,15 @@ home:
   blog_heading: Writing
   blog_limit: 6
 
+# Tags offered in the project filter, in this order. Projects use these in `tags:`.
+project_tags:
+  - Mechanical
+  - Research
+  - Space
+  - Mixed-Signal
+  - Power
+  - FPGA & Silicon
+
 # Build
 markdown: kramdown
 kramdown:
