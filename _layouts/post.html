@@ -9,6 +9,7 @@ layout: default
   </header>
   <div class="prose">
     {{ content }}
+    {% if page.books.size > 0 %}{% include reading-ledger.html books=page.books %}{% endif %}
   </div>
   <p class="back back-end">{% if page.categories contains 'reading' %}<a class="mg-link" href="{{ '/' | relative_url }}#reading">← Reading</a>{% else %}<a class="mg-link" href="{{ '/' | relative_url }}#writing">← All writing</a>{% endif %}</p>
 </article>

@@ -76,6 +76,30 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 .more { margin: var(--space-4) 0 0; font-family: var(--font-mono); font-size: 13px; }
 .empty { color: var(--ink-faint); font-style: italic; }
 
+/* Reading ledger */
+.ledger { max-width: var(--measure); }
+.ledger-summary { font-family: var(--font-mono); font-size: 11.5px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); margin: var(--space-5) 0 0; }
+.book-list { border-bottom: var(--hairline) solid var(--rule); }
+.book { display: grid; grid-template-columns: 6.5em minmax(0, 1fr) auto; column-gap: var(--space-4); align-items: baseline; padding: var(--space-4) 0; border-top: var(--hairline) solid var(--rule); }
+.book-when { font-family: var(--font-mono); font-size: 12px; line-height: 20px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+.book-title { font-size: 20px; line-height: 26px; font-weight: 500; font-style: italic; margin: 0; color: var(--ink); }
+.book-title a { color: inherit; text-decoration: none; }
+.book-title a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.book-author { font-size: 16px; line-height: 22px; color: var(--ink-muted); margin: 2px 0 0; }
+.book-year { font-family: var(--font-mono); font-size: 12px; color: var(--ink-faint); margin-left: var(--space-2); font-variant-numeric: tabular-nums; }
+.book-note { font-size: 17px; line-height: 26px; color: var(--ink-muted); margin: var(--space-2) 0 0; max-width: 58ch; }
+.book-tags { display: flex; gap: var(--space-2); }
+.prose .ledger h2 { margin-top: var(--space-6); }
+.prose .book-list p { margin: 0; }
+.prose .book-title { margin: 0; font-size: 20px; line-height: 26px; font-style: italic; }
+.prose .book-title::before { content: none; }
+.prose .book-list .book:first-child { border-top: 0; }
+.prose .ledger h2 + .book-list { margin-top: calc(-1 * var(--space-3)); }
+.prose .book-list .book-note { margin-top: var(--space-2); }
+.prose .book-list .book-author { margin-top: 2px; }
+.book-list-compact .book { padding: var(--space-3) 0; }
+.book-list-compact { max-width: var(--measure); }
+
 /* Footer */
 .site-footer { margin-top: var(--space-8); padding-top: var(--space-4); border-top: var(--hairline) solid var(--rule); display: flex; flex-wrap: wrap; gap: var(--space-2); font-family: var(--font-mono); font-size: 12px; line-height: 20px; color: var(--ink-faint); }
 .theme-toggle { font: inherit; color: var(--ink-faint); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
@@ -143,6 +167,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
   .doc-title { font-size: 30px; line-height: 36px; }
 }
 @media (max-width: 520px) {
+  .book { grid-template-columns: 1fr; }
+  .book-tags { margin-top: var(--space-2); }
   .project-grid { grid-template-columns: 1fr; }
   .post-row { grid-template-columns: 1fr; }
   .post-row-date { line-height: 20px; }

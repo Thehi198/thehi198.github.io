@@ -50,11 +50,27 @@ layout: default
 
 <section class="site-section" id="reading" aria-labelledby="reading-heading">
   <h2 class="mg-section" id="reading-heading"><span class="mg-section-num">§2</span><span class="mg-section-title">{{ site.home.reading_heading | default: "Reading" }}</span></h2>
-  {% if reading_posts.size > 0 %}
+  {%- assign shelf = nil -%}
+  {%- for post in reading_posts -%}{%- if post.books and shelf == nil -%}{%- assign shelf = post -%}{%- endif -%}{%- endfor -%}
+  {% if shelf %}
+    {%- assign now = shelf.books | where: "status", "reading" -%}
+    {%- if now.size == 0 -%}{%- assign now = shelf.books | where: "status", "finished" | sort: "finished" | reverse -%}{%- endif -%}
+    {% if now.size > 0 %}
+    <div class="book-list book-list-compact">
+      {% for b in now limit: 3 %}{% include book-row.html book=b compact=true %}{% endfor %}
+    </div>
+    {% else %}
+    <p class="empty">Nothing listed yet.</p>
+    {% endif %}
+    <p class="more"><a class="mg-link" href="{{ shelf.url | relative_url }}">Full reading list{% if shelf.books.size > 0 %} ({{ shelf.books.size }}){% endif %} →</a></p>
+  {% endif %}
+  {%- assign others = "" | split: "" -%}
+  {%- for post in reading_posts -%}{%- unless post.books -%}{%- assign others = others | push: post -%}{%- endunless -%}{%- endfor -%}
+  {% if others.size > 0 %}
   <div class="post-list">
-    {% for post in reading_posts %}{% include post-row.html post=post %}{% endfor %}
+    {% for post in others %}{% include post-row.html post=post %}{% endfor %}
   </div>
-  {% else %}
+  {% elsif shelf == nil %}
   <p class="empty">Nothing listed yet.</p>
   {% endif %}
 </section>

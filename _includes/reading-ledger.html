@@ -1,0 +1,10 @@
+{%- assign books = include.books -%}
+{%- assign reading = books | where: "status", "reading" -%}
+{%- assign finished = books | where: "status", "finished" | sort: "finished" | reverse -%}
+{%- assign upnext = books | where: "status", "next" -%}
+<div class="ledger">
+  <p class="ledger-summary">{{ reading.size }} reading · {{ finished.size }} finished{% if upnext.size > 0 %} · {{ upnext.size }} up next{% endif %}</p>
+  {% if reading.size > 0 %}<h2>Currently reading</h2><div class="book-list">{% for b in reading %}{% include book-row.html book=b %}{% endfor %}</div>{% endif %}
+  {% if finished.size > 0 %}<h2>Finished</h2><div class="book-list">{% for b in finished %}{% include book-row.html book=b %}{% endfor %}</div>{% endif %}
+  {% if upnext.size > 0 %}<h2>Up next</h2><div class="book-list">{% for b in upnext %}{% include book-row.html book=b %}{% endfor %}</div>{% endif %}
+</div>
