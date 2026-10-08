@@ -8,7 +8,7 @@ a { color: var(--accent); }
 button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* Header: name, affiliation, bio, links, portrait */
-.site > .site-header { max-width: calc(var(--measure) + 240px + var(--space-6)); }
+.site > .site-header, .site > .site-section { max-width: var(--measure-wide); }
 .site-header { border-bottom: 0; padding-bottom: 0; display: grid; grid-template-columns: 1fr auto; column-gap: var(--space-6); align-items: start; }
 .site-bio { margin-top: var(--space-4); color: var(--ink); }
 .site-bio p { margin: 0 0 var(--space-3); }
@@ -29,8 +29,32 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 .filter .mg-tag[aria-pressed="true"]:hover { color: var(--on-accent); }
 .filter .mg-tag:disabled { cursor: default; color: var(--ink-faint); border-color: var(--rule); }
 .filter-sep { color: var(--ink-faint); padding: 0 var(--space-1); }
-.mg-entry[hidden] { display: none; }
-.project-list { border-bottom: var(--hairline) solid var(--rule); }
+.tag-menu { position: relative; }
+.tag-menu-toggle { gap: 6px; }
+.tag-menu-caret { font-size: 10px; }
+.tag-menu-panel { position: absolute; z-index: 10; top: calc(100% + var(--space-1)); left: 0; min-width: 240px; background: var(--paper-raised); border: var(--hairline) solid var(--edge); border-radius: var(--radius-1); padding: var(--space-2) 0; }
+.filter-option { display: flex; align-items: center; gap: var(--space-3); padding: 7px var(--space-4); font-family: var(--font-mono); font-size: 11.5px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); cursor: pointer; white-space: nowrap; }
+.filter-option:hover { background: var(--paper-sunk); }
+.filter-option input { accent-color: var(--accent); width: 14px; height: 14px; margin: 0; flex: none; }
+.filter-option input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.filter-option.is-empty { color: var(--ink-faint); cursor: default; }
+.filter-option.is-empty:hover { background: none; }
+.filter-count { margin-left: auto; padding-left: var(--space-4); color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+.card[hidden] { display: none; }
+.project-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6) var(--space-5); padding-top: var(--space-2); }
+.card { display: flex; flex-direction: column; min-width: 0; }
+.card-link { display: block; color: inherit; text-decoration: none; }
+.card-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.card-plate { aspect-ratio: 3 / 2; background: var(--paper-sunk); border: var(--hairline) solid var(--rule); overflow: hidden; }
+.card-plate img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card-date { display: block; margin-top: var(--space-3); font-family: var(--font-mono); font-size: 12px; line-height: 16px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+.card-title { font-size: 20px; line-height: 26px; font-weight: 500; margin: var(--space-1) 0 0; color: var(--ink); text-wrap: balance; }
+.card-link:hover .card-title { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.card .mg-entry-tags { margin-top: var(--space-3); }
+.project-more { margin: var(--space-5) 0 0; }
+.project-more[hidden] { display: none; }
+.project-more button { font-family: var(--font-mono); font-size: 13px; line-height: 20px; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.project-more button:hover { text-decoration-thickness: 2px; }
 .filter-status { font-family: var(--font-mono); font-size: 11.5px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); margin: var(--space-3) 0 0; }
 .filter-status button { font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 
@@ -40,12 +64,15 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 
 /* Blog list */
 .post-list { border-bottom: var(--hairline) solid var(--rule); }
-.post-row { display: grid; grid-template-columns: 7.5em 1fr; column-gap: var(--space-4); padding: var(--space-4) 0; border-top: var(--hairline) solid var(--rule); }
+.post-row { display: grid; grid-template-columns: 7.5em minmax(0, 1fr); column-gap: var(--space-4); padding: var(--space-4) 0; border-top: var(--hairline) solid var(--rule); }
 .post-row-date { font-family: var(--font-mono); font-size: 13px; line-height: 30px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
 .post-row-title { font-size: 22px; line-height: 30px; font-weight: 500; margin: 0; }
 .post-row-title a { color: var(--ink); text-decoration: none; }
 .post-row-title a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-.post-row-abs { font-size: 17px; line-height: 26px; color: var(--ink-muted); margin: var(--space-1) 0 0; }
+.post-row-abs { max-width: 62ch; font-size: 17px; line-height: 26px; color: var(--ink-muted); margin: var(--space-1) 0 0; }
+.read-title { font-style: italic; }
+.read-author { font-size: 17px; line-height: 24px; color: var(--ink-muted); margin: 2px 0 0; }
+.site-section .mg-section { max-width: none; }
 .more { margin: var(--space-4) 0 0; font-family: var(--font-mono); font-size: 13px; }
 .empty { color: var(--ink-faint); font-style: italic; }
 
@@ -107,6 +134,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
 /* Display math */
 .prose .katex-display { margin: var(--space-5) 0; overflow-x: auto; overflow-y: hidden; }
 
+@media (max-width: 860px) { .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 720px) {
   .site { padding: var(--space-7) var(--space-4) var(--space-6); }
   .site-header { grid-template-columns: 1fr; }
@@ -115,6 +143,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
   .doc-title { font-size: 30px; line-height: 36px; }
 }
 @media (max-width: 520px) {
+  .project-grid { grid-template-columns: 1fr; }
   .post-row { grid-template-columns: 1fr; }
   .post-row-date { line-height: 20px; }
 }

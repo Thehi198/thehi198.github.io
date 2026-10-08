@@ -7,7 +7,7 @@ lang: en
 
 author:
   name: Aaditya Rao
-  affiliation: Electrical and computer engineering, Olin College of Engineering.
+  affiliation: Electrical and Computer Engineering, Olin College of Engineering.
   photo: /assets/images/bio-photo.png
   photo_alt: Portrait of Aaditya Rao
   links:
@@ -22,6 +22,8 @@ author:
 home:
   projects_heading: Portfolio
   blog_heading: Writing
+  reading_heading: Reading
+  projects_limit: 6
   blog_limit: 6
 
 # Tags offered in the project filter, in this order. Projects use these in `tags:`.

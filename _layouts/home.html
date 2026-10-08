@@ -26,13 +26,23 @@ layout: default
   <div class="filter" role="group" aria-label="Filter projects" data-filter hidden>
     {% if featured_count > 0 %}<button type="button" class="mg-tag" data-filter-value="featured">Featured</button>{% endif %}
     <button type="button" class="mg-tag" data-filter-all>All</button>
-    {% if all_tags.size > 0 %}<span class="filter-sep" aria-hidden="true">·</span>{% endif %}
-    {% for t in all_tags %}<button type="button" class="mg-tag" data-filter-value="{{ t | downcase | escape }}">{{ t }}</button>{% endfor %}
+    {% if all_tags.size > 0 %}
+    <span class="filter-sep" aria-hidden="true">·</span>
+    <div class="tag-menu" data-tag-menu>
+      <button type="button" class="mg-tag tag-menu-toggle" data-tag-toggle aria-expanded="false" aria-controls="tag-menu-panel"><span data-tag-summary>Tags</span><span class="tag-menu-caret" aria-hidden="true">▾</span></button>
+      <div class="tag-menu-panel" id="tag-menu-panel" role="group" aria-label="Tags" data-tag-panel hidden>
+        {% for t in all_tags %}
+        <label class="filter-option"><input type="checkbox" id="tag-{{ t | slugify }}" value="{{ t | downcase | escape }}"><span>{{ t }}</span><span class="filter-count"></span></label>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
   </div>
 
-  <div class="project-list" data-projects>
+  <div class="project-grid" data-projects data-limit="{{ site.home.projects_limit | default: 6 }}">
     {% for p in projects %}{% include project-entry.html project=p index=forloop.index %}{% endfor %}
   </div>
+  <p class="project-more" data-more hidden><button type="button"></button></p>
   <p class="filter-status" data-filter-status aria-live="polite"></p>
 </section>
 
@@ -45,5 +55,26 @@ layout: default
   {% if posts.size > site.home.blog_limit %}<p class="more"><a class="mg-link" href="{{ '/blog/' | relative_url }}">All {{ posts.size }} posts →</a></p>{% endif %}
   {% else %}
   <p class="empty">Nothing published yet.</p>
+  {% endif %}
+</section>
+
+<section class="site-section" id="reading" aria-labelledby="reading-heading">
+  <h2 class="mg-section" id="reading-heading"><span class="mg-section-num">§3</span><span class="mg-section-title">{{ site.home.reading_heading | default: "Reading" }}</span></h2>
+  {% assign reading = site.data.reading %}
+  {% if reading and reading.size > 0 %}
+  <div class="post-list">
+    {% for r in reading %}
+    <article class="post-row read-row">
+      <span class="post-row-date">{{ r.status | default: r.year }}</span>
+      <div>
+        <h3 class="post-row-title read-title">{% if r.link %}<a href="{{ r.link }}">{{ r.title }}</a>{% else %}{{ r.title }}{% endif %}</h3>
+        {% if r.author %}<p class="read-author">{{ r.author }}</p>{% endif %}
+        {% if r.note %}<p class="post-row-abs">{{ r.note }}</p>{% endif %}
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty">Nothing listed yet.</p>
   {% endif %}
 </section>
