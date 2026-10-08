@@ -1,0 +1,8 @@
+{%- comment -%}
+  Numbered figure. Numbers are assigned in page order by CSS.
+  {% include figure.html src="/assets/images/x.png" alt="..." caption="What to notice." wide=true %}
+{%- endcomment -%}
+<figure class="mg-figure{% if include.wide %} is-wide{% endif %}"{% if include.id %} id="{{ include.id }}"{% endif %}>
+  <div class="mg-figure-plate"><img src="{{ include.src | relative_url }}" alt="{{ include.alt | escape }}" loading="lazy"></div>
+  {% if include.caption %}<figcaption class="mg-caption"><span class="mg-caption-label"></span><span class="mg-caption-text">{{ include.caption | markdownify | remove: '<p>' | remove: '</p>' | strip }}</span></figcaption>{% endif %}
+</figure>

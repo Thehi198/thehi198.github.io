@@ -1,0 +1,92 @@
+---
+layout: default
+---
+{%- assign projects = site.projects | sort: "order" -%}
+{%- assign featured_count = projects | where: "featured", true | size -%}
+{%- if site.project_tags -%}{%- assign all_tags = site.project_tags -%}{%- else -%}{%- assign all_tags = projects | map: "tags" | join: "," | split: "," | uniq | sort_natural -%}{%- endif -%}
+{%- assign reading_posts = site.categories.reading | default: empty -%}
+{%- assign posts = "" | split: "" -%}
+{%- for post in site.posts -%}{%- unless post.categories contains "reading" -%}{%- assign posts = posts | push: post -%}{%- endunless -%}{%- endfor -%}
+
+<header class="mg-header site-header">
+  <div class="site-header-text">
+    <h1 class="mg-header-name">{{ site.author.name }}</h1>
+    {% if site.author.affiliation %}<p class="mg-header-aff">{{ site.author.affiliation }}</p>{% endif %}
+    <div class="site-bio">{{ content }}</div>
+    <nav class="mg-header-links" aria-label="Links">
+      {% for l in site.author.links %}<a class="mg-link" href="{{ l.href }}">{{ l.label }}</a>{% endfor %}
+    </nav>
+  </div>
+  {% if site.author.photo %}
+  <img class="site-portrait" src="{{ site.author.photo | relative_url }}" alt="{{ site.author.photo_alt | default: site.author.name }}" width="240" height="240">
+  {% endif %}
+</header>
+
+<section class="site-section" id="work" aria-labelledby="work-heading">
+  <h2 class="mg-section" id="work-heading"><span class="mg-section-num">§1</span><span class="mg-section-title">{{ site.home.projects_heading }}</span></h2>
+  {% if site.home.projects_intro %}<p class="section-intro">{{ site.home.projects_intro }}</p>{% endif %}
+
+  <div class="filter" role="group" aria-label="Filter projects" data-filter hidden>
+    {% if featured_count > 0 %}<button type="button" class="mg-tag" data-filter-value="featured">Featured</button>{% endif %}
+    <button type="button" class="mg-tag" data-filter-all>All</button>
+    {% if all_tags.size > 0 %}
+    <span class="filter-sep" aria-hidden="true">·</span>
+    <div class="tag-menu" data-tag-menu>
+      <button type="button" class="mg-tag tag-menu-toggle" data-tag-toggle aria-expanded="false" aria-controls="tag-menu-panel"><span data-tag-summary>Tags</span><span class="tag-menu-caret" aria-hidden="true">▾</span></button>
+      <div class="tag-menu-panel" id="tag-menu-panel" role="group" aria-label="Tags" data-tag-panel hidden>
+        {% for t in all_tags %}
+        <label class="filter-option"><input type="checkbox" id="tag-{{ t | slugify }}" value="{{ t | downcase | escape }}"><span>{{ t }}</span><span class="filter-count"></span></label>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="project-grid" data-projects data-limit="{{ site.home.projects_limit | default: 6 }}">
+    {% for p in projects %}{% include project-entry.html project=p index=forloop.index %}{% endfor %}
+  </div>
+  <p class="project-more" data-more hidden><button type="button"></button></p>
+  <p class="filter-status" data-filter-status aria-live="polite"></p>
+</section>
+
+<section class="site-section" id="reading" aria-labelledby="reading-heading">
+  <h2 class="mg-section" id="reading-heading"><span class="mg-section-num">§2</span><span class="mg-section-title">{{ site.home.reading_heading | default: "Reading" }}</span></h2>
+  {%- assign shelf = nil -%}
+  {%- for post in reading_posts -%}{%- if post.books and shelf == nil -%}{%- assign shelf = post -%}{%- endif -%}{%- endfor -%}
+  {% if shelf %}
+    {%- assign latest = shelf.books | map: "read" | compact | sort | last -%}
+    {%- assign current = shelf.books | where: "status", "reading" -%}
+    {%- assign recent = shelf.books | where: "read", latest | reverse -%}
+    {%- assign now = current -%}
+    {%- for b in recent -%}{%- unless now contains b -%}{%- assign now = now | push: b -%}{%- endunless -%}{%- endfor -%}
+    {% if now.size > 0 %}
+    <ul class="book-list">
+      {% for b in now limit: 3 %}{% include book-row.html book=b year=true %}{% endfor %}
+    </ul>
+    {% else %}
+    <p class="empty">Nothing listed yet.</p>
+    {% endif %}
+    <p class="more"><a class="mg-link" href="{{ shelf.url | relative_url }}">All books and reading list →</a></p>
+  {% endif %}
+  {%- assign others = "" | split: "" -%}
+  {%- for post in reading_posts -%}{%- unless post.books -%}{%- assign others = others | push: post -%}{%- endunless -%}{%- endfor -%}
+  {% if others.size > 0 %}
+  <ul class="post-list">
+    {% for post in others %}{% include post-row.html post=post %}{% endfor %}
+  </ul>
+  {% elsif shelf == nil %}
+  <p class="empty">Nothing listed yet.</p>
+  {% endif %}
+</section>
+
+<section class="site-section" id="writing" aria-labelledby="writing-heading">
+  <h2 class="mg-section" id="writing-heading"><span class="mg-section-num">§3</span><span class="mg-section-title">{{ site.home.blog_heading }}</span></h2>
+  {% if posts.size > 0 %}
+  <ul class="post-list">
+    {% for post in posts limit: site.home.blog_limit %}{% include post-row.html post=post %}{% endfor %}
+  </ul>
+  {% if posts.size > site.home.blog_limit %}<p class="more"><a class="mg-link" href="{{ '/blog/' | relative_url }}">All {{ posts.size }} posts →</a></p>{% endif %}
+  {% else %}
+  <p class="empty">Nothing published yet.</p>
+  {% endif %}
+</section>

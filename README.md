@@ -1,27 +1,33 @@
-# Minimal Mistakes remote theme starter
+# thehi198.github.io
 
-Click [**Use this template**](https://github.com/mmistakes/mm-github-pages-starter/generate) button above for the quickest method of getting started with the [Minimal Mistakes Jekyll theme](https://github.com/mmistakes/minimal-mistakes).
+Personal portfolio built with Jekyll on GitHub Pages, styled with the Monograph design system in `design-system/`.
 
-Contains basic configuration to get you a site with:
+## Editing
 
-- Sample posts.
-- Sample top navigation.
-- Sample author sidebar with social links.
-- Sample footer links.
-- Paginated home page.
-- Archive pages for posts grouped by year, category, and tag.
-- Sample about page.
-- Sample 404 page.
-- Site wide search.
+- Header (name, affiliation, photo, links): `_config.yml` under `author`. Bio: the body of `index.md`.
+- Projects: one Markdown file per project in `_projects/`. Front matter:
 
-Replace sample content with your own and [configure as necessary](https://mmistakes.github.io/minimal-mistakes/docs/configuration/).
+  ```yaml
+  title: "Project title"
+  date: 2024-05-01
+  role: Lead engineer
+  org: OPEL
+  order: 1            # position on the home page
+  featured: true      # shown under the default Featured filter
+  abstract: "One or two sentences, written as results."
+  tags: [Propulsion, Power electronics]
+  status: Flight hardware   # optional accent tag
+  result: "Headline outcome."  # optional, shown as a Result remark
+  image: /assets/images/lead.png
+  image_caption: "What to notice in the image."
+  ```
 
----
+- Posts: `_posts/YYYY-MM-DD-slug.md` with `title`, optional `description`, `tags`, and `math: true` for KaTeX.
+- In page bodies, `##` headings become numbered sections (§1) and `###` subsections (1.1). Use `{% include figure.html src=... caption=... %}` for numbered figures and `{% include remark.html kind="Note" text=... %}` for asides.
 
-## Troubleshooting
+## Local preview
 
-If you have a question about using Jekyll, start a discussion on the [Jekyll Forum](https://talk.jekyllrb.com/) or [StackOverflow](https://stackoverflow.com/questions/tagged/jekyll). Other resources:
-
-- [Ruby 101](https://jekyllrb.com/docs/ruby-101/)
-- [Setting up a Jekyll site with GitHub Pages](https://jekyllrb.com/docs/github-pages/)
-- [Configuring GitHub Metadata](https://github.com/jekyll/github-metadata/blob/master/docs/configuration.md#configuration) to work properly when developing locally and avoid `No GitHub API authentication could be found. Some fields may be missing or have incorrect data.` warnings.
+```sh
+bundle install
+bundle exec jekyll serve
+```

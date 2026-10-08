@@ -1,0 +1,9 @@
+{%- comment -%}
+  Textbook-style aside. kind: Remark (default), Result (one per page), Note.
+  {% include remark.html kind="Result" text="Regulated anode current to ±2 % across 200 to 600 W." %}
+{%- endcomment -%}
+{%- assign kind = include.kind | default: "Remark" -%}
+<aside class="mg-remark{% if kind == 'Result' %} is-result{% elsif kind == 'Note' %} is-note{% endif %}">
+  <span class="mg-remark-lead">{{ kind }}{% if include.number %} {{ include.number }}{% endif %}.</span>
+  <span class="mg-remark-body">{{ include.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}</span>
+</aside>

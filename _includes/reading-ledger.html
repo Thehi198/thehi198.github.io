@@ -1,0 +1,15 @@
+{%- assign books = include.books -%}
+{%- assign years = books | map: "read" | compact | uniq | sort | reverse -%}
+{%- assign upnext = books | where: "status", "next" -%}
+<div class="ledger">
+  {% for y in years %}
+  {%- assign group = books | where: "read", y -%}
+  <p class="book-group">{{ y }}</p>
+  <ul class="book-list">{% for b in group %}{% if b.status == "reading" %}{% include book-row.html book=b %}{% endif %}{% endfor %}{% for b in group %}{% unless b.status == "reading" %}{% include book-row.html book=b %}{% endunless %}{% endfor %}</ul>
+  {% endfor %}
+  {% if upnext.size > 0 %}
+  <h2 class="ledger-heading">Reading list</h2>
+  <p class="ledger-note">Ever growing pile of books to read. No particular order.</p>
+  <ul class="book-list">{% for b in upnext %}{% include book-row.html book=b %}{% endfor %}</ul>
+  {% endif %}
+</div>

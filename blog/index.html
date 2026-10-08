@@ -1,0 +1,8 @@
+---
+layout: page
+title: Writing
+permalink: /blog/
+---
+<ul class="post-list">
+  {% for post in site.posts %}{% unless post.categories contains "reading" %}{% include post-row.html post=post summary=true %}{% endunless %}{% endfor %}
+</ul>

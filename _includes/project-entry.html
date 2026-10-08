@@ -1,0 +1,16 @@
+{%- assign p = include.project -%}
+<article class="card" data-tags="{{ p.tags | join: '|' | downcase | escape }}" data-featured="{% if p.featured %}true{% else %}false{% endif %}">
+  <a class="card-link" href="{{ p.url | relative_url }}">
+    <div class="card-plate">
+      {% if p.image %}<img src="{{ p.image | relative_url }}" alt="{{ p.image_alt | default: '' | escape }}" loading="lazy">{% endif %}
+    </div>
+    <time class="card-date" datetime="{{ p.date | date: '%Y-%m' }}">{{ p.date | date: "%b %Y" }}</time>
+    <h3 class="card-title">{{ p.title }}</h3>
+  </a>
+  {% if p.tags.size > 0 or p.status %}
+  <div class="mg-entry-tags">
+    {% if p.status %}<span class="mg-tag mg-tag-accent">{{ p.status }}</span>{% endif %}
+    {% for t in p.tags limit: 4 %}<span class="mg-tag">{{ t }}</span>{% endfor %}
+  </div>
+  {% endif %}
+</article>

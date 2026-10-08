@@ -1,0 +1,6 @@
+{%- assign post = include.post -%}
+<li class="post-row">
+  <a class="post-row-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+  <span class="post-row-meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time></span>
+  {% if include.summary %}{% assign summary = post.description | default: post.excerpt | strip_html | strip %}{% if summary != "" %}<p class="post-row-abs">{{ summary | truncatewords: 30 }}</p>{% endif %}{% endif %}
+</li>
