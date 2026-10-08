@@ -48,8 +48,19 @@ layout: default
   <p class="filter-status" data-filter-status aria-live="polite"></p>
 </section>
 
+<section class="site-section" id="reading" aria-labelledby="reading-heading">
+  <h2 class="mg-section" id="reading-heading"><span class="mg-section-num">§2</span><span class="mg-section-title">{{ site.home.reading_heading | default: "Reading" }}</span></h2>
+  {% if reading_posts.size > 0 %}
+  <div class="post-list">
+    {% for post in reading_posts %}{% include post-row.html post=post %}{% endfor %}
+  </div>
+  {% else %}
+  <p class="empty">Nothing listed yet.</p>
+  {% endif %}
+</section>
+
 <section class="site-section" id="writing" aria-labelledby="writing-heading">
-  <h2 class="mg-section" id="writing-heading"><span class="mg-section-num">§2</span><span class="mg-section-title">{{ site.home.blog_heading }}</span></h2>
+  <h2 class="mg-section" id="writing-heading"><span class="mg-section-num">§3</span><span class="mg-section-title">{{ site.home.blog_heading }}</span></h2>
   {% if posts.size > 0 %}
   <div class="post-list">
     {% for post in posts limit: site.home.blog_limit %}{% include post-row.html post=post %}{% endfor %}
@@ -57,16 +68,5 @@ layout: default
   {% if posts.size > site.home.blog_limit %}<p class="more"><a class="mg-link" href="{{ '/blog/' | relative_url }}">All {{ posts.size }} posts →</a></p>{% endif %}
   {% else %}
   <p class="empty">Nothing published yet.</p>
-  {% endif %}
-</section>
-
-<section class="site-section" id="reading" aria-labelledby="reading-heading">
-  <h2 class="mg-section" id="reading-heading"><span class="mg-section-num">§3</span><span class="mg-section-title">{{ site.home.reading_heading | default: "Reading" }}</span></h2>
-  {% if reading_posts.size > 0 %}
-  <div class="post-list">
-    {% for post in reading_posts %}{% include post-row.html post=post %}{% endfor %}
-  </div>
-  {% else %}
-  <p class="empty">Nothing listed yet.</p>
   {% endif %}
 </section>
