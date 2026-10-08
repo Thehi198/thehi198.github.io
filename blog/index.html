@@ -1,0 +1,8 @@
+---
+layout: page
+title: Writing
+permalink: /blog/
+---
+<div class="post-list">
+  {% for post in site.posts %}{% include post-row.html post=post %}{% endfor %}
+</div>

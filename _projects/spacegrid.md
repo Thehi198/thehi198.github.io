@@ -1,17 +1,15 @@
 ---
-title: "SpaceGrid: Networking for Spaceborne Grid Compute"
+title: "SpaceGrid: networking for spaceborne grid compute"
 date: 2023-01-15
-description: "A brief description of the project."
-header:
-  image: assets/images/spacegrid.webp
-  teaser: assets/images/spacegrid.webp
-categories:
-  - portfolio
-tags:
-  - project
-  - space-infra
+role: Independent research
+order: 1
+featured: true
+abstract: "Proposed a laser-linked backplane for satellite compute constellations, with FFT-based multi-channel transmission and locally topology-sensitive A* routing."
+tags: [Space infrastructure, Networking, Research]
+image: /assets/images/spacegrid.webp
+image_alt: Concept render of a satellite constellation
+image_caption: Concept render. Each satellite acts as a compute rack; the constellation is the data center.
 ---
-January 15, 2023
 ## Abstract
 236 terawatt hours. That is how much power data centers consumed in 2021. From YouTube to Netflix, Wikipedia to ChatGPT, almost every application we rely on today uses cloud computing as its backbone. The need for cloud data centers is growing exponentially. An average datacenter of 50,000 Sq Ft. consumes 5 Megawatts of power. This is enough to power 5,000 homes. Even with renewable energy options expanding, the demand cannot keep up with the supply. This is not sustainable.
 
@@ -23,11 +21,11 @@ In the SpaceGrid, individual satellites will function as compute racks and a con
 
 To address this problem, I will develop a network of compute nodes on earth with commercial off-the-shelf (COTS) components, which are connected by laser edges. In this grid, data is transmitted via laser diodes and photovoltaic receivers, using a Fast Fourier Transform-based algorithm. In my model, the transmissions are routed using a Local Topology Sensitive Network. I will develop the algorithm to provide low latency and high bandwidth interconnectivity. This algorithm has the potential to be implemented at an industrial scale. Developing laser edge transmission and networking will enable space-borne grid computing and thereby lower surface energy consumption.
 
-## MOTIVATION AND APPROACH
+## Motivation and approach
 ### Problem
 Cloud services currently consume 1% of the global energy capacity. (Pesce, 2021). In the next few decades, cloud services will only grow exponentially, as resource-intensive applications such as cryptocurrency, artificial intelligence, genomics, and computational sciences continue to grow. For example, Oracle Cloud Infrastructure, the smallest of the four hyper-scale providers expects a 4x growth in the next 5 years. (Oracle, 2022) Since 2012, Moore's law has enabled power-efficient chips to grow at a steady rate. However, this is coming to an end as chip manufacturers are reaching physical limits in transistor density. Chip density cannot scale at the same rate as energy demand. Growth in cloud services far exceeds growth in energy production.    Bloomberg estimates that by 2030, cloud services may take up to 8% of global energy capacity. (Bass et.al 2017). With such a rapid increase in energy demand, it is not feasible to scale the current grid to reach this capacity even if energy production is doubled every year. Continuing to grow cloud data centers on earth-based grids is no longer feasible in the foreseeable future.
 
-### Current Solutions
+### Current solutions
 To manage the cloud industry’s power consumption, one current solution is to increase CPU density. CPU density packs more compute capacity into a single silicon, Dynamic Voltage Frequency (DVF) where CPUs that are idle are shut down and power is throttled for CPUs with low utilization. (Mastelic et al., 2015) In addition, Virtualization, where the same CPU cores are shared with multiple virtual servers, ensures improved utilization from <10% to >50%.
 
 Between 2012 and now, while the compute capacity has quadrupled to over a billion active cores over the past decade, the power consumption by data centers has only grown by 20% - 30% (Masanet et al., 2020). This is because of Moore’s Law. However, Moore’s Law will hit its limit over the next decade. Denser Cores and Virtualization will no longer proportionally decrease power consumption.
@@ -40,7 +38,7 @@ My solution builds on these innovations to enable data centers in space. More sp
 
 I propose to implement a networking layer of protocol and routing optimizations for data transmission within a satellite constellation, using laser technologies.
 
-### Hardware Test Environment
+### Hardware test environment
 
 For testing purposes, I plan to build a network of computing and storage with COTS components to emulate satellites. I plan to test the reliability of transmissions, throughput, and latency. My plan is to use a network of Arduino boards as computing & storage nodes. I will connect these nodes through a laser diode and a photovoltaic cell as a receiver. The system will be powered through the Arduino board. First, I will use a potentiometer to modulate the current source and intensity in the laser diode. The Photoresistor will detect the spike in voltage, when it receives a signal from the laser diode and correlate it to a pulse.
 

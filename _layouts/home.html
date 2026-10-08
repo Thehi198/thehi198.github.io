@@ -1,0 +1,49 @@
+---
+layout: default
+---
+{%- assign projects = site.projects | sort: "order" -%}
+{%- assign featured_count = projects | where: "featured", true | size -%}
+{%- assign all_tags = projects | map: "tags" | join: "," | split: "," | uniq | sort_natural -%}
+{%- assign posts = site.posts -%}
+
+<header class="mg-header site-header">
+  <div class="site-header-text">
+    <h1 class="mg-header-name">{{ site.author.name }}</h1>
+    {% if site.author.affiliation %}<p class="mg-header-aff">{{ site.author.affiliation }}</p>{% endif %}
+    <div class="site-bio">{{ content }}</div>
+    <nav class="mg-header-links" aria-label="Links">
+      {% for l in site.author.links %}<a class="mg-link" href="{{ l.href }}">{{ l.label }}</a>{% endfor %}
+    </nav>
+  </div>
+  {% if site.author.photo %}
+  <img class="site-portrait" src="{{ site.author.photo | relative_url }}" alt="{{ site.author.photo_alt | default: site.author.name }}" width="168" height="168">
+  {% endif %}
+</header>
+
+<section class="site-section" id="work" aria-labelledby="work-heading">
+  <h2 class="mg-section" id="work-heading"><span class="mg-section-num">§1</span><span class="mg-section-title">{{ site.home.projects_heading }}</span></h2>
+
+  <div class="filter" role="group" aria-label="Filter projects" data-filter hidden>
+    {% if featured_count > 0 %}<button type="button" class="mg-tag" data-filter-value="featured">Featured</button>{% endif %}
+    <button type="button" class="mg-tag" data-filter-value="all">All projects</button>
+    {% if all_tags.size > 0 %}<span class="filter-sep" aria-hidden="true">·</span>{% endif %}
+    {% for t in all_tags %}<button type="button" class="mg-tag" data-filter-value="{{ t | downcase }}">{{ t }}</button>{% endfor %}
+  </div>
+
+  <div class="project-list" data-projects>
+    {% for p in projects %}{% include project-entry.html project=p index=forloop.index %}{% endfor %}
+  </div>
+  <p class="filter-status" data-filter-status aria-live="polite"></p>
+</section>
+
+<section class="site-section" id="writing" aria-labelledby="writing-heading">
+  <h2 class="mg-section" id="writing-heading"><span class="mg-section-num">§2</span><span class="mg-section-title">{{ site.home.blog_heading }}</span></h2>
+  {% if posts.size > 0 %}
+  <div class="post-list">
+    {% for post in posts limit: site.home.blog_limit %}{% include post-row.html post=post %}{% endfor %}
+  </div>
+  {% if posts.size > site.home.blog_limit %}<p class="more"><a class="mg-link" href="{{ '/blog/' | relative_url }}">All {{ posts.size }} posts →</a></p>{% endif %}
+  {% else %}
+  <p class="empty">Nothing published yet.</p>
+  {% endif %}
+</section>

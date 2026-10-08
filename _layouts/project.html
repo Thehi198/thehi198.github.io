@@ -1,0 +1,30 @@
+---
+layout: default
+---
+{%- capture meta -%}{{ page.year | default: page.date | date: "%Y" }}{% if page.role %} · {{ page.role }}{% endif %}{% if page.org %} · {{ page.org }}{% endif %}{%- endcapture -%}
+<article class="doc">
+  <p class="back"><a class="mg-link" href="{{ '/' | relative_url }}#work">← {{ site.author.name }}</a></p>
+  <header class="doc-header">
+    <h1 class="title doc-title">{{ page.title }}</h1>
+    <div class="mg-entry-meta">{{ meta }}</div>
+    {% if page.tags.size > 0 or page.status %}
+    <div class="mg-entry-tags">
+      {% if page.status %}<span class="mg-tag mg-tag-accent">{{ page.status }}</span>{% endif %}
+      {% for t in page.tags %}<span class="mg-tag">{{ t }}</span>{% endfor %}
+    </div>
+    {% endif %}
+    {% if page.links %}
+    <nav class="mg-header-links" aria-label="Project links">
+      {% for l in page.links %}<a class="mg-link" href="{{ l.href }}">{{ l.label }} →</a>{% endfor %}
+    </nav>
+    {% endif %}
+  </header>
+
+  <div class="prose">
+    {% if page.result %}{% include remark.html kind="Result" text=page.result %}{% endif %}
+    {% if page.image %}{% include figure.html src=page.image alt=page.image_alt caption=page.image_caption wide=true %}{% endif %}
+    {{ content }}
+  </div>
+
+  <p class="back back-end"><a class="mg-link" href="{{ '/' | relative_url }}#work">← All projects</a></p>
+</article>

@@ -1,121 +1,74 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
+# Site identity. Everything in the home page header comes from here.
 title: Aaditya Rao
-email: arao@olin.edu
-description: I am a student at Olin College studying Mechanical Engineering focused on Hall Thruster design.
-# this means to ignore newlines until "baseurl:"
-twitter_username: thehi198
-github_username: thehi198
-minimal_mistakes_skin: notion
-search: true
-
-# Build settings
-markdown: kramdown
-remote_theme: mmistakes/minimal-mistakes
-# Outputting
-permalink: /:categories/:title/
-paginate: 5 # amount of posts to show
-paginate_path: /page:num/
-timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-
-include:
-  - _pages
-
-# Exclude from processing.
-# The following items will not be processed, by default. Create a custom list
-# to override the default setting.
-# exclude:
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
-
-# Plugins (previously gems:)
-plugins:
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jekyll-gist
-  - jekyll-feed
-  - jemoji
-  - jekyll-include-cache
+description: Mechanical engineering student at Olin College working on Hall thruster design.
+url: "https://thehi198.github.io"
+baseurl: ""
+lang: en
 
 author:
-  name   : "Aaditya Rao"
-  avatar : "/assets/images/bio-photo.png"
-  bio    : "I am a student at Olin College studying Mechanical Engineering focused on Hall Thruster design."
+  name: Aaditya Rao
+  affiliation: Mechanical engineering, Olin College of Engineering.
+  photo: /assets/images/bio-photo.png
+  photo_alt: Portrait of Aaditya Rao
   links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/thehi198"
-    - label: "Linkedin"
-      icon: "fab fa-fw fa-linkedin"
-      url: "https://linkedin.com/in/aadrao"
+    - label: Email
+      href: mailto:arao@olin.edu
+    - label: GitHub
+      href: https://github.com/thehi198
+    - label: LinkedIn
+      href: https://linkedin.com/in/aadrao
 
-footer:
-  links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/thehi198"
-    - label: "Linkedin"
-      icon: "fab fa-fw fa-linkedin"
-      url: "https://linkedin.com/in/aadrao"
+# Home page
+home:
+  projects_heading: Selected work
+  blog_heading: Writing
+  blog_limit: 6
+
+# Build
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  math_engine: mathjax
+  syntax_highlighter_opts:
+    disable: true
+
+permalink: /blog/:year/:title/
 
 collections:
-  portfolio:
+  projects:
     output: true
-    permalink: /portfolio/:path/
+    permalink: /projects/:name/
 
 defaults:
-  # _posts
-  - scope:
-      path: ""
-      type: posts
-    values:
-      layout: single
-      author_profile: true
-      read_time: true
-      comments: true
-      share: true
-      related: true
-  # _pages
-  - scope:
-      path: "_pages"
-      type: pages
-    values:
-      layout: single
-      author_profile: true
-    # _portfolio
-  - scope:
-      path: ""
-      type: portfolio
-    values:
-      layout: single
-      author_profile: false
-      share: true
-      show_excerpts: true
-      teaser: "{{ page.image }}"
+  - scope: { path: "", type: projects }
+    values: { layout: project }
+  - scope: { path: "", type: posts }
+    values: { layout: post }
 
-category_archive:
-  type: liquid
-  path: /categories/
-tag_archive:
-  type: liquid
-  path: /tags/
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
 
-show_teasers: true
+feed:
+  path: blog/feed.xml
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+  - design-system/README.md
+  - design-system/CLAUDE.md
+  - design-system/tokens.json
+  - design-system/components/bundle.js
+  - design-system/components/index.d.ts
+  - design-system/components/Equation.md
+  - design-system/components/Figure.md
+  - design-system/components/PageHeader.md
+  - design-system/components/ProjectEntry.md
+  - design-system/components/Remark.md
+  - design-system/components/SectionHeading.md
+  - design-system/components/SpecTable.md
+  - design-system/components/Tag.md
