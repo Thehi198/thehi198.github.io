@@ -38,7 +38,7 @@ books:
   - { title: "Confessions of an Economic Hit Man", author: "John Perkins", status: next }
   - { title: "Deep Simplicity", author: "John Gribbin", status: next }
   - { title: "The Count of Monte Cristo", author: "Alexandre Dumas", status: next }
-  - { title: "Shōgun", author: "James Clavell", status: next }
+  - { title: "Shogun", author: "James Clavell", status: next }
   - { title: "Midnight Ride, Industrial Dawn", author: "Robert Martello", status: next }
   - { title: "Beyond Good and Evil", author: "Friedrich Nietzsche", status: next }
   - { title: "Daily Rituals", author: "Mason Currey", status: next }
