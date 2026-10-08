@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{%- capture meta -%}{{ page.year | default: page.date | date: "%Y" }}{% if page.role %} · {{ page.role }}{% endif %}{% if page.org %} · {{ page.org }}{% endif %}{%- endcapture -%}
+{%- capture meta -%}{{ page.year | default: page.date | date: "%Y" }}{%- endcapture -%}
 <article class="doc">
   <p class="back"><a class="mg-link" href="{{ '/' | relative_url }}#work">← {{ site.author.name }}</a></p>
   <header class="doc-header">

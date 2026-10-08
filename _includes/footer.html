@@ -1,5 +1,5 @@
 <footer class="site-footer">
-  <span>&copy; {{ site.time | date: "%Y" }} {{ site.author.name }}</span>
+  <span>&copy; {% if site.copyright_year %}{{ site.copyright_year }}{% else %}{{ site.time | date: "%Y" }}{% endif %} {{ site.author.name }}</span>
   <span aria-hidden="true">·</span>
   <a class="mg-link" href="{{ '/blog/feed.xml' | relative_url }}">Feed</a>
   <span aria-hidden="true">·</span>

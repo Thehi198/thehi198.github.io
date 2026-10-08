@@ -4,6 +4,7 @@ description: Electrical and computer engineering student at Olin College working
 url: "https://thehi198.github.io"
 baseurl: ""
 lang: en
+copyright_year: 2027   # year shown in the footer; remove to use the build year
 
 author:
   name: Aaditya Rao

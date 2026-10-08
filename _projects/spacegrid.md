@@ -2,8 +2,8 @@
 title: "SpaceGrid: networking for spaceborne grid compute"
 date: 2023-01-15
 role: Independent research
-order: 1
-featured: true
+order: 5
+featured: false
 abstract: "Proposed a laser-linked backplane for satellite compute constellations, with FFT-based multi-channel transmission and locally topology-sensitive A* routing."
 tags: [Space, Research]
 image: /assets/images/spacegrid.webp
