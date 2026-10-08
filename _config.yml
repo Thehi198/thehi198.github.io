@@ -21,6 +21,7 @@ author:
 # Home page
 home:
   projects_heading: Portfolio
+  projects_intro: A collection of projects I have worked on, spanning from classwork and academic projects to research publications and things made for fun.
   blog_heading: Writing
   reading_heading: Reading
   projects_limit: 6
