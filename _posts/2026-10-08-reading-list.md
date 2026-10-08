@@ -56,4 +56,4 @@ books:
   - { title: "Antifragile", author: "Nassim Nicholas Taleb", status: next }
   - { title: "Structures", author: "J. E. Gordon", status: next }
 ---
-A running collection of my favorite books sorted by year read.
+A running collection of my favorite books sorted by year read, newest first.
