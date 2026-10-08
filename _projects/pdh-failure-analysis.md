@@ -3,8 +3,8 @@ title: "Power distribution hub failure at PNW Block Party 2022"
 date: 2022-10-29
 role: Electrical lead
 org: FRC 7461
-order: 2
-featured: true
+order: 6
+featured: false
 abstract: "Root-caused a PDH fire to a ground wire working loose from its WAGO clamp under battery-swap tension, then rewrote the team's wiring and inspection procedure."
 tags: [Power]
 image: /assets/images/PDH.webp

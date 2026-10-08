@@ -1,8 +1,12 @@
 {%- comment -%}
   Numbered figure. Numbers are assigned in page order by CSS.
+  A src ending in .mp4, .webm or .mov renders a video; .pdf embeds the document
+  with an open link (browsers that cannot show PDFs inline get the link alone).
   {% include figure.html src="/assets/images/x.png" alt="..." caption="What to notice." wide=true %}
 {%- endcomment -%}
 <figure class="mg-figure{% if include.wide %} is-wide{% endif %}"{% if include.id %} id="{{ include.id }}"{% endif %}>
-  <div class="mg-figure-plate"><img src="{{ include.src | relative_url }}" alt="{{ include.alt | escape }}" loading="lazy"></div>
+  {%- assign ext = include.src | split: "." | last | downcase -%}
+  <div class="mg-figure-plate">{% if ext == "pdf" %}<object class="mg-figure-pdf" data="{{ include.src | relative_url }}#view=FitH" type="application/pdf"{% if include.alt %} aria-label="{{ include.alt | escape }}"{% endif %}><a class="mg-link" href="{{ include.src | relative_url }}">Open the PDF →</a></object>{% elsif ext == "mp4" or ext == "webm" or ext == "mov" %}<video src="{{ include.src | relative_url }}" controls muted playsinline preload="metadata"{% if include.alt %} aria-label="{{ include.alt | escape }}"{% endif %}></video>{% else %}<img src="{{ include.src | relative_url }}" alt="{{ include.alt | escape }}" loading="lazy">{% endif %}</div>
+  {% if ext == "pdf" %}<p class="mg-figure-pdf-link"><a class="mg-link" href="{{ include.src | relative_url }}" target="_blank" rel="noopener">Open PDF in a new tab →</a></p>{% endif %}
   {% if include.caption %}<figcaption class="mg-caption"><span class="mg-caption-label"></span><span class="mg-caption-text">{{ include.caption | markdownify | remove: '<p>' | remove: '</p>' | strip }}</span></figcaption>{% endif %}
 </figure>
